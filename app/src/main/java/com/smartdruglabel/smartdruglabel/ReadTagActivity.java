@@ -48,6 +48,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ReadTagActivity extends AppCompatActivity {
     public static final String MIME_TEXT_PLAIN = "text/plain";
@@ -96,8 +97,12 @@ public class ReadTagActivity extends AppCompatActivity {
 
 
     public void clickStopReadTag(View view) {
-        aBoolean = true;
-        mediaPlayer.stop();
+        try {
+            mediaPlayer.stop();
+            aBoolean = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -160,9 +165,8 @@ public class ReadTagActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        stopForegroundDispatch(this, mNfcAdapter);
-
         super.onPause();
+        stopForegroundDispatch(this, mNfcAdapter);
     }
 
     @Override
@@ -273,12 +277,11 @@ public class ReadTagActivity extends AppCompatActivity {
 
             if (result != null) {
                 String url = "http://202.58.126.48:8081/smartdruglabel/getAudioName.php";
-                /* String url = "http://www.kongtunmae-oncb.go.th/offer_hmf/smartdruglabel/getAudioName.php"; */
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("strID", result));
 
                 String resultServer = getHttpPost(url, params);
-                Log.d("31janV1", "resultServer ==> " + resultServer);
+                //Log.d("31janV1", "resultServer ==> " + resultServer);
 
                 /*** Default Value ***/
                 String strStatusID = "0";
@@ -298,12 +301,38 @@ public class ReadTagActivity extends AppCompatActivity {
                 //Prepare audioName
                 if (strStatusID.equals("0")) {
                     //Dialog
-                    final AlertDialog.Builder ad = new AlertDialog.Builder(ReadTagActivity.this);
-                    ad.setTitle("Error!");
-                    ad.setIcon(android.R.drawable.btn_star_big_on);
-                    ad.setPositiveButton("Close", null);
-                    ad.setMessage(strError);
-                    ad.show();
+                    //final AlertDialog.Builder ad = new AlertDialog.Builder(ReadTagActivity.this);
+                    //ad.setTitle("Error!");
+                    //ad.setIcon(android.R.drawable.btn_star_big_on);
+                    //ad.setPositiveButton("Close", null);
+                    //ad.setMessage(strError);
+                    //ad.show();
+
+                    String urlAudio = "http://202.58.126.48/uploaded/error.mp3";
+                    mTextView.setText("Can't find drug in database");
+                    mediaPlayer = new MediaPlayer();
+
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    try {
+                        mediaPlayer.setDataSource(urlAudio);
+                        mediaPlayer.prepare();
+
+                        if (aBoolean) {
+                            aBoolean = false;
+                            mediaPlayer.start();
+                            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mediaPlayer) {
+                                    mediaPlayer.release();
+                                    aBoolean = true;
+                                }
+                            });
+                        }
+
+                    } catch (IOException ex) {
+                        Log.e(TAG, "Could not open file", ex);
+                    }
+
                 } else {
                     String urlAudio = "http://202.58.126.48/uploaded/" + strAudioName;
                     mTextView.setText(strAudioName);
@@ -322,7 +351,6 @@ public class ReadTagActivity extends AppCompatActivity {
                                 public void onCompletion(MediaPlayer mediaPlayer) {
                                     mediaPlayer.release();
                                     aBoolean = true;
-                                    Log.d("31janV1", "onComplete ทำงาน");
                                 }
                             });
                         }

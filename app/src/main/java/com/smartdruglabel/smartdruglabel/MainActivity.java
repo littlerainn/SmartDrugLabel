@@ -1,5 +1,6 @@
 package com.smartdruglabel.smartdruglabel;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +64,11 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 String url = "http://202.58.126.48:8081/smartdruglabel/checkLogin.php";
 
+                //Call Progress Dialog
+                //ProgressDialog progressDialog = ProgressDialog.show(MainActivity.this,
+                        //"Loading", "Please wait...");
+                //progressDialog.show();
+
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("strUser", txtUser.getText().toString().trim()));
                 params.add(new BasicNameValuePair("strPass", txtPass.getText().toString().trim()));
@@ -87,7 +93,7 @@ public class MainActivity extends Activity {
                 if (strStatusID.equals("0")) {
                     //Dialog
                     MyAlert myAlert = new MyAlert(MainActivity.this); //Call MyAlert Class
-                    myAlert.myDialog(R.drawable.warning_icon, "Error", strError);
+                    myAlert.myDialog(android.R.drawable.btn_star_big_on, "Error", strError);
                     //ad.setTitle("Error");
                     //ad.setIcon(android.R.drawable.btn_star_big_on);
                     //ad.setPositiveButton("Close", null);
@@ -97,9 +103,11 @@ public class MainActivity extends Activity {
                     txtPass.setText("");
                 } else {
                     Toast.makeText(MainActivity.this, "Login OK", Toast.LENGTH_SHORT).show();
+                    //progressDialog.dismiss();
                     Intent mainmenu_screen = new Intent(getApplicationContext(), MainMenuActivity.class);
                     mainmenu_screen.putExtra("Username", strName);
                     startActivity(mainmenu_screen);
+                    finish();
                 }
             }
         });

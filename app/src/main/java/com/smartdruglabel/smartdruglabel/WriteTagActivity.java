@@ -14,6 +14,7 @@ import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -23,13 +24,27 @@ import java.util.Locale;
 public class WriteTagActivity extends ActionBarActivity {
 
     NfcAdapter nfcAdapter;
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.writetag_screen);
 
+        mTextView = (TextView) findViewById(R.id.resultText);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        if (nfcAdapter == null) {
+            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        if (!nfcAdapter.isEnabled()) {
+            mTextView.setText("NFC is disabled.");
+        } else {
+            mTextView.setText(R.string.text_description);
+        }
     }
 
     @Override

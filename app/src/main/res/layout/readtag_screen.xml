@@ -82,6 +82,7 @@
         android:onClick="clickStopReadTag"
         android:text="STOP"
         android:textColor="#ffffffff"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:contentDescription="stop"/>
 
 </RelativeLayout>
