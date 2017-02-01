@@ -37,7 +37,6 @@ import android.widget.Toast;
 
 public class ChangePwdActivity extends Activity {
     @SuppressLint("NewApi")
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
