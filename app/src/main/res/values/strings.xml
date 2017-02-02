@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Smart Drug Label</string>
-    <string name="text_description">Approach an NFC Tag</string>
+    <string name="text_description">กรุณาแตะสติกเกอร์เอ็นเอฟซี</string>
 </resources>

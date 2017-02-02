@@ -20,6 +20,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.annotation.SuppressLint;
@@ -40,6 +41,21 @@ public class RegisterActivity extends Activity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.register_screen);
 
+        //font Setting
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        TextView myTextview = (TextView) findViewById(R.id.register);
+        myTextview.setTypeface(myTypeface);
+
+        final EditText txtUsername = (EditText) findViewById(R.id.username_edtext);
+        final EditText txtEmail = (EditText) findViewById(R.id.email_edtext);
+        final EditText txtPassword = (EditText) findViewById(R.id.passwd_edtext);
+        final EditText txtConPassword = (EditText) findViewById(R.id.cnfpasswd_edtext);
+
+        txtUsername.setTypeface(myTypeface);
+        txtEmail.setTypeface(myTypeface);
+        txtPassword.setTypeface(myTypeface);
+        txtConPassword.setTypeface(myTypeface);
+
         // Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -48,6 +64,7 @@ public class RegisterActivity extends Activity {
 
         //btnSave
         final Button btnSave = (Button) findViewById(R.id.register_button);
+        btnSave.setTypeface(myTypeface);
         //Perform action on click
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -58,6 +75,7 @@ public class RegisterActivity extends Activity {
         });
 
         TextView backbtn = (TextView) findViewById(R.id.member_login_tv);
+        backbtn.setTypeface(myTypeface);
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,13 +92,13 @@ public class RegisterActivity extends Activity {
 
         //Dialog
         final AlertDialog.Builder ad = new AlertDialog.Builder(this);
-        ad.setTitle("Error!");
-        ad.setIcon(android.R.drawable.btn_star_big_on);
-        ad.setPositiveButton("Close", null);
+        ad.setTitle("ข้อผิดพลาด");
+        ad.setIcon(R.drawable.warn_icon);
+        ad.setPositiveButton("ตกลง", null);
 
         //Check Username
         if (txtUsername.getText().length() == 0) {
-            ad.setMessage("Please enter [Username]");
+            ad.setMessage("กรุณาใส่ชื่อผู้ใช้งาน");
             ad.show();
             txtUsername.requestFocus();
             return false;
@@ -88,7 +106,7 @@ public class RegisterActivity extends Activity {
 
         //Check Email
         if (txtEmail.getText().length() == 0) {
-            ad.setMessage("Please enter [Email]");
+            ad.setMessage("กรุณาใส่อีเมล");
             ad.show();
             txtEmail.requestFocus();
             return false;
@@ -98,7 +116,7 @@ public class RegisterActivity extends Activity {
         String email = txtEmail.getText().toString().trim();
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if (!email.matches(emailPattern)) {
-            ad.setMessage("Invalid email address");
+            ad.setMessage("กรุณาตรวจสอบอีเมล");
             ad.show();
             txtEmail.requestFocus();
             return false;
@@ -106,7 +124,7 @@ public class RegisterActivity extends Activity {
 
         //Check Password
         if (txtPassword.getText().length() == 0 || txtConPassword.getText().length() == 0) {
-            ad.setMessage("Please enter [Password/Confirm Password]");
+            ad.setMessage("กรุณาใส่รหัสผ่าน");
             ad.show();
             txtPassword.requestFocus();
             return false;
@@ -114,7 +132,7 @@ public class RegisterActivity extends Activity {
 
         //Check Password and Confirm Password (Match)
         if (!txtPassword.getText().toString().equals(txtConPassword.getText().toString())) {
-            ad.setMessage("Password and Confirm Password Not Match!");
+            ad.setMessage("กรุณาตรวจสอบรหัสผ่าน");
             ad.show();
             txtConPassword.requestFocus();
             return false;
@@ -139,7 +157,7 @@ public class RegisterActivity extends Activity {
 
         /*** Default Value ***/
         String strStatusID = "0";
-        String strError = "Unknow Status!";
+        String strError = "กรุณาตรวจสอบเครือข่าย";
 
         JSONObject c;
         try {
@@ -156,7 +174,7 @@ public class RegisterActivity extends Activity {
             ad.setMessage(strError);
             ad.show();
         } else {
-            Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "ลงทะเบียนสำเร็จ", Toast.LENGTH_SHORT).show();
             txtUsername.setText("");
             txtPassword.setText("");
             txtConPassword.setText("");

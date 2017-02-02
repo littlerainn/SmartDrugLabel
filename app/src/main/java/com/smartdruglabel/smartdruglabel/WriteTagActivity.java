@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -25,6 +26,7 @@ public class WriteTagActivity extends ActionBarActivity {
 
     NfcAdapter nfcAdapter;
     private TextView mTextView;
+    private TextView txtwrite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +34,22 @@ public class WriteTagActivity extends ActionBarActivity {
         setContentView(R.layout.writetag_screen);
 
         mTextView = (TextView) findViewById(R.id.resultText);
+        txtwrite = (TextView) findViewById(R.id.txtwrite);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        //font Setting
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        mTextView.setTypeface(myTypeface);
+        txtwrite.setTypeface(myTypeface);
+
         if (nfcAdapter == null) {
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "อุปกรณ์นี้ไม่รองรับเทคโนโลยีเอ็นเอฟซี", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
         if (!nfcAdapter.isEnabled()) {
-            mTextView.setText("NFC is disabled.");
+            mTextView.setText("กรุณาเปิดโหมดเอ็นเอฟซี");
         } else {
             mTextView.setText(R.string.text_description);
         }
@@ -68,7 +76,7 @@ public class WriteTagActivity extends ActionBarActivity {
 
             Intent intent_ = getIntent();
             final String drugID = intent_.getStringExtra("drugID");
-            Toast.makeText(WriteTagActivity.this, "The drugID is " + drugID, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(WriteTagActivity.this, "The drugID is " + drugID, Toast.LENGTH_SHORT).show();
 
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             NdefMessage ndefMessage = createNdefMessage(drugID);
@@ -99,7 +107,7 @@ public class WriteTagActivity extends ActionBarActivity {
             ndefFormatable.format(ndefMessage);
             ndefFormatable.close();
 
-            Toast.makeText(this, "Tag writen!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Tag writen!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.e("formatTag", e.getMessage());
         }
@@ -129,10 +137,10 @@ public class WriteTagActivity extends ActionBarActivity {
 
                 //Toast.makeText(this, "Tag writen!", Toast.LENGTH_SHORT).show();
                 final AlertDialog.Builder viewDetail = new AlertDialog.Builder(this);
-                viewDetail.setIcon(android.R.drawable.btn_star_big_on);
-                viewDetail.setTitle("Write Tag");
-                viewDetail.setMessage("Write complete!").setCancelable(false)
-                        .setPositiveButton("OK",
+                viewDetail.setIcon(R.drawable.information_icon);
+                viewDetail.setTitle("เขียนข้อมูล");
+                viewDetail.setMessage("เขียนข้อมูลสำเร็จ").setCancelable(false)
+                        .setPositiveButton("ตกลง",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

@@ -18,7 +18,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/banner"
-        android:queryHint="Search..."/>
+        android:queryHint="ค้นหา..." />
 
     <ListView
         android:id="@+id/lv_medname"
@@ -36,8 +36,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/register_button"
-        android:text="SUBMIT"
+        android:text="ตกลง"
         android:textColor="#ffffff"
-        android:textSize="20dp" />
+        android:textSize="25dp" />
 
 </RelativeLayout>

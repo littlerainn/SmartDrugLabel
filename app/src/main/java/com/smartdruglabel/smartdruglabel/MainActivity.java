@@ -2,6 +2,7 @@ package com.smartdruglabel.smartdruglabel;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,11 @@ public class MainActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
+        //font Setting
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        TextView myTextview = (TextView) findViewById(R.id.member_login);
+        myTextview.setTypeface(myTypeface);
+
         //Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -56,9 +62,13 @@ public class MainActivity extends Activity {
         //txtUsername & txtPassword
         final EditText txtUser = (EditText) findViewById(R.id.txtUsername);
         final EditText txtPass = (EditText) findViewById(R.id.txtPassword);
+        txtUser.setTypeface(myTypeface);
+        txtPass.setTypeface(myTypeface);
 
         //btnLogin
         final Button btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin.setTypeface(myTypeface);
+
         //Perform action on click
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -66,7 +76,7 @@ public class MainActivity extends Activity {
 
                 //Call Progress Dialog
                 //ProgressDialog progressDialog = ProgressDialog.show(MainActivity.this,
-                        //"Loading", "Please wait...");
+                //"Loading", "Please wait...");
                 //progressDialog.show();
 
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -78,7 +88,7 @@ public class MainActivity extends Activity {
                 /*** Default Value ***/
                 String strStatusID = "0";
                 String strName = "";
-                String strError = "Unknow Status!";
+                String strError = "กรุณาตรวจสอบเครือข่าย";
 
                 JSONObject c;
                 try {
@@ -93,7 +103,7 @@ public class MainActivity extends Activity {
                 if (strStatusID.equals("0")) {
                     //Dialog
                     MyAlert myAlert = new MyAlert(MainActivity.this); //Call MyAlert Class
-                    myAlert.myDialog(android.R.drawable.btn_star_big_on, "Error", strError);
+                    myAlert.myDialog(R.drawable.warn_icon, "ข้อผิดพลาด", strError);
                     //ad.setTitle("Error");
                     //ad.setIcon(android.R.drawable.btn_star_big_on);
                     //ad.setPositiveButton("Close", null);
@@ -102,7 +112,7 @@ public class MainActivity extends Activity {
                     txtUser.setText("");
                     txtPass.setText("");
                 } else {
-                    Toast.makeText(MainActivity.this, "Login OK", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "ยินดีต้อนรับ คุณ " + strName, Toast.LENGTH_SHORT).show();
                     //progressDialog.dismiss();
                     Intent mainmenu_screen = new Intent(getApplicationContext(), MainMenuActivity.class);
                     mainmenu_screen.putExtra("Username", strName);
@@ -113,6 +123,7 @@ public class MainActivity extends Activity {
         });
 
         TextView register_tv = (TextView) findViewById(R.id.register);
+        register_tv.setTypeface(myTypeface);
         register_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +133,7 @@ public class MainActivity extends Activity {
         });
 
         TextView forgorpwd_tv = (TextView) findViewById(R.id.forgot_passwd);
+        forgorpwd_tv.setTypeface(myTypeface);
         forgorpwd_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

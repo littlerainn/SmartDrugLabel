@@ -43,9 +43,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Read NFC Tag"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:text="อ่านฉลากยา"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="monospace" />
 
             <ImageView
                 android:id="@+id/nfcicon"
@@ -65,8 +66,9 @@
                 android:layout_below="@+id/nfcicon"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:text="Approach an NFC Tag"
-                android:textSize="16dp" />
+                android:text="กรุณาแตะสติกเกอร์เอ็นเอฟซี"
+                android:textSize="22dp"
+                android:typeface="monospace" />
 
         </RelativeLayout>
 
@@ -79,10 +81,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/register_button"
+        android:contentDescription="หยุด"
         android:onClick="clickStopReadTag"
-        android:text="STOP"
+        android:text="หยุด"
         android:textColor="#ffffffff"
-        android:textSize="20dp"
-        android:contentDescription="stop"/>
+        android:textSize="30dp" />
 
 </RelativeLayout>

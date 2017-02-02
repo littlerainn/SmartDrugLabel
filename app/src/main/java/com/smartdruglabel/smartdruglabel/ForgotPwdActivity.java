@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -39,6 +41,11 @@ public class ForgotPwdActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgotpwd_screen);
 
+        //font Setting
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        TextView myTextview = (TextView) findViewById(R.id.forgot_tv);
+        myTextview.setTypeface(myTypeface);
+
         //Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -49,8 +56,12 @@ public class ForgotPwdActivity extends Activity {
 
         //txtEmail
         final EditText txtEmail = (EditText) findViewById(R.id.email_edtext);
+        txtEmail.setTypeface(myTypeface);
+
         //btnLogin
         final Button btnSend = (Button) findViewById(R.id.btnSend);
+        btnSend.setTypeface(myTypeface);
+
         //Perform action on click
         btnSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -64,7 +75,7 @@ public class ForgotPwdActivity extends Activity {
                 /*** Default Value ***/
                 String strStatusID = "0";
                 String strName = "";
-                String strError = "Unknow Status!";
+                String strError = "กรุณาตรวจสอบเครือข่าย";
 
                 JSONObject c;
                 try {
@@ -79,13 +90,13 @@ public class ForgotPwdActivity extends Activity {
                 //Prepare Send Email
                 if (strStatusID.equals("0")) {
                     //Dialog
-                    ad.setTitle("Error!");
-                    ad.setIcon(android.R.drawable.btn_star_big_on);
-                    ad.setPositiveButton("Close", null);
+                    ad.setTitle("ข้อผิดพลาด");
+                    ad.setIcon(R.drawable.warn_icon);
+                    ad.setPositiveButton("ตกลง", null);
                     ad.setMessage(strError);
                     ad.show();
                 } else {
-                    Toast.makeText(ForgotPwdActivity.this, "Password has been sent to your email address.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPwdActivity.this, "ส่งรหัสผ่านไปยังอีเมลสำเร็จ", Toast.LENGTH_SHORT).show();
                 }
             }
         });

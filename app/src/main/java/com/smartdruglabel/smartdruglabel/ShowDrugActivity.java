@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.annotation.SuppressLint;
@@ -54,6 +55,11 @@ public class ShowDrugActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showdrug_screen);
 
+        //btnSubmit
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnSubmit.setTypeface(myTypeface);
+
         //Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -66,7 +72,7 @@ public class ShowDrugActivity extends Activity {
 
     public void getDrugID(String ID) {
         //btnSubmit
-        final Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
         final String drugID = ID;
 
@@ -74,7 +80,7 @@ public class ShowDrugActivity extends Activity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Toast.makeText(ShowDrugActivity.this, "Checked " + drugID, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ShowDrugActivity.this, "Checked " + drugID, Toast.LENGTH_SHORT).show();
 
                 Intent write_screen = new Intent(getApplicationContext(), WriteTagActivity.class);
                 write_screen.putExtra("drugID", drugID);
@@ -87,6 +93,7 @@ public class ShowDrugActivity extends Activity {
         //Listview1
         final ListView listView1 = (ListView) findViewById(R.id.lv_medname);
         listView1.setItemChecked(0, true);
+
 
         //Searchview
         final SearchView sv = (SearchView) findViewById(R.id.inputSearch);
@@ -175,17 +182,17 @@ public class ShowDrugActivity extends Activity {
                     Picasso.with(ShowDrugActivity.this).load(strURLImage).into(imageView);
                     viewDetail.setView(view);
 
-                    viewDetail.setIcon(android.R.drawable.btn_star_big_on);
-                    viewDetail.setTitle("Drug Detail");
-                    viewDetail.setMessage("ID : " + strMedId + "\n"
-                            + "Name : " + strMedName + "\n"
-                            + "Group : " + strMedGroup + "\n"
-                            + "Type : " + strMedType + "\n"
-                            + "Indication : " + strMedIndication + "\n"
-                            + "Direction : " + strMedDirection + "\n"
-                            + "Warning : " + strMedWarning + "\n"
-                            + "Expired Date : " + expiredDate + "\n");
-                    viewDetail.setPositiveButton("OK",
+                    viewDetail.setIcon(R.drawable.information_icon);
+                    viewDetail.setTitle("รายละเอียดยา");
+                    viewDetail.setMessage("รหัส : " + strMedId + "\n"
+                            + "ชื่อ : " + strMedName + "\n"
+                            + "กลุ่ม : " + strMedGroup + "\n"
+                            + "รูปแบบ : " + strMedType + "\n"
+                            + "สรรพคุณ : " + strMedIndication + "\n"
+                            + "วิธีรับประทาน : " + strMedDirection + "\n"
+                            + "คำเตือน : " + strMedWarning + "\n"
+                            + "วันหมดอายุ : " + expiredDate + "\n");
+                    viewDetail.setPositiveButton("ตกลง",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
                                                     int which) {

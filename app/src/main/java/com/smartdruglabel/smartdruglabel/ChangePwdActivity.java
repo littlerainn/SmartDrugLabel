@@ -20,6 +20,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.annotation.SuppressLint;
@@ -42,6 +43,19 @@ public class ChangePwdActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.changepwd_screen);
 
+        //font Setting
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        TextView myTextview = (TextView) findViewById(R.id.changepwd);
+        myTextview.setTypeface(myTypeface);
+
+        final EditText txtUsername = (EditText) findViewById(R.id.username_edtext);
+        final EditText txtPassword = (EditText) findViewById(R.id.passwd_edtext);
+        final EditText txtConPassword = (EditText) findViewById(R.id.cnfpasswd_edtext);
+
+        txtUsername.setTypeface(myTypeface);
+        txtPassword.setTypeface(myTypeface);
+        txtConPassword.setTypeface(myTypeface);
+
         // Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -51,6 +65,8 @@ public class ChangePwdActivity extends Activity {
 
         // btnSave
         Button btnSave = (Button) findViewById(R.id.btnSave);
+        btnSave.setTypeface(myTypeface);
+
         // Perform action on click
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -73,15 +89,22 @@ public class ChangePwdActivity extends Activity {
         final EditText txtPassword = (EditText) findViewById(R.id.passwd_edtext);
         final EditText txtConPassword = (EditText) findViewById(R.id.cnfpasswd_edtext);
 
+        //font Setting
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        txtUsername.setTypeface(myTypeface);
+        txtPassword.setTypeface(myTypeface);
+        txtConPassword.setTypeface(myTypeface);
+
+
         //Dialog
         final AlertDialog.Builder ad = new AlertDialog.Builder(this);
-        ad.setTitle("Error!");
-        ad.setIcon(android.R.drawable.btn_star_big_on);
-        ad.setPositiveButton("Close", null);
+        ad.setTitle("ข้อผิดพลาด");
+        ad.setIcon(R.drawable.warn_icon);
+        ad.setPositiveButton("ตกลง", null);
 
         //Check Password
         if (txtPassword.getText().length() == 0 || txtConPassword.getText().length() == 0) {
-            ad.setMessage("Please enter [Password/Confirm Password]");
+            ad.setMessage("กรุณาใส่รหัสผ่าน");
             ad.show();
             txtPassword.requestFocus();
             return false;
@@ -89,7 +112,7 @@ public class ChangePwdActivity extends Activity {
 
         //Check Password and Confirm Password (Match)
         if (!txtPassword.getText().toString().equals(txtConPassword.getText().toString())) {
-            ad.setMessage("Password and Confirm Password Not Match!");
+            ad.setMessage("กรุณาตรวจสอบรหัสผ่านอีกครั้ง");
             ad.show();
             txtConPassword.requestFocus();
             return false;
@@ -112,7 +135,7 @@ public class ChangePwdActivity extends Activity {
         String resultServer = getHttpPost(url, params);
         /*** Default Value ***/
         String strStatusID = "0";
-        String strError = "Unknow Status!";
+        String strError = "กรุณาตรวจสอบเครือข่าย";
 
         JSONObject c;
         try {
@@ -130,7 +153,7 @@ public class ChangePwdActivity extends Activity {
             ad.show();
             return false;
         } else {
-            Toast.makeText(ChangePwdActivity.this, "Change Password Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChangePwdActivity.this, "เปลี่ยนรหัสผ่านสำเร็จ", Toast.LENGTH_SHORT).show();
             txtPassword.setText("");
             txtConPassword.setText("");
             txtPassword.requestFocus();

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +57,7 @@ public class ReadTagActivity extends AppCompatActivity {
     public static final String TAG = "CheckNFC";
 
     private TextView mTextView;
+    private TextView textRead;
     private NfcAdapter mNfcAdapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -73,16 +76,25 @@ public class ReadTagActivity extends AppCompatActivity {
         setContentView(R.layout.readtag_screen);
 
         mTextView = (TextView) findViewById(R.id.resultText);
+        textRead = (TextView) findViewById(R.id.txtread);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        //font Setting
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/supermarket.ttf");
+        mTextView.setTypeface(myTypeface);
+        textRead.setTypeface(myTypeface);
+
+        final Button btnStop = (Button) findViewById(R.id.btnStop);
+        btnStop.setTypeface(myTypeface);
+
         if (mNfcAdapter == null) {
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "อุปกรณ์นี้ไม่รองรับเทคโนโลยีเอ็นเอฟซี", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
         if (!mNfcAdapter.isEnabled()) {
-            mTextView.setText("NFC is disabled.");
+            mTextView.setText("กรุณาเปิดโหมดเอ็นเอฟซี");
         } else {
             mTextView.setText(R.string.text_description);
         }
@@ -286,7 +298,7 @@ public class ReadTagActivity extends AppCompatActivity {
                 /*** Default Value ***/
                 String strStatusID = "0";
                 String strAudioName = "";
-                String strError = "Unknow Status!";
+                String strError = "กรุณาตรวจสอบเครือข่าย";
 
                 JSONObject c;
                 try {
@@ -309,7 +321,7 @@ public class ReadTagActivity extends AppCompatActivity {
                     //ad.show();
 
                     String urlAudio = "http://202.58.126.48/uploaded/error.mp3";
-                    mTextView.setText("Can't find drug in database");
+                    mTextView.setText("ไม่พบข้อมูลในฐานข้อมูล");
                     mediaPlayer = new MediaPlayer();
 
                     mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -355,7 +367,7 @@ public class ReadTagActivity extends AppCompatActivity {
                             });
                         }
 
-                        Toast.makeText(getApplicationContext(), "Play Audio File", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Play Audio File", Toast.LENGTH_SHORT).show();
                     } catch (IOException ex) {
                         Log.e(TAG, "Could not open file", ex);
                     }
