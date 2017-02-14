@@ -298,6 +298,7 @@ public class ReadTagActivity extends AppCompatActivity {
                 /*** Default Value ***/
                 String strStatusID = "0";
                 String strAudioName = "";
+                String strDrugName = "";
                 String strError = "กรุณาตรวจสอบเครือข่าย";
 
                 JSONObject c;
@@ -305,6 +306,7 @@ public class ReadTagActivity extends AppCompatActivity {
                     c = new JSONObject(resultServer);
                     strStatusID = c.getString("StatusID");
                     strAudioName = c.getString("audioName");
+                    strDrugName = c.getString("drugName");
                     strError = c.getString("Error");
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -347,7 +349,7 @@ public class ReadTagActivity extends AppCompatActivity {
 
                 } else {
                     String urlAudio = "http://202.58.126.48/uploaded/" + strAudioName;
-                    mTextView.setText(strAudioName);
+                    mTextView.setText(strDrugName);
                     mediaPlayer = new MediaPlayer();
 
                     mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
