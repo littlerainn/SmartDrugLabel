@@ -56,7 +56,7 @@
                 android:layout_below="@+id/txtread"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
-                android:contentDescription="แตะสติกเกอร์เพื่ออ่านข้อมูล"
+                android:contentDescription="แตะสติกเกอร์เพื่ออ่านข้อมูลยา"
                 android:src="@drawable/nfc_icon" />
 
             <TextView
