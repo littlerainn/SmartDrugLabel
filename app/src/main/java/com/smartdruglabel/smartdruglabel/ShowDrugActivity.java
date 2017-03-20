@@ -189,7 +189,7 @@ public class ShowDrugActivity extends Activity {
                             + "กลุ่ม : " + strMedGroup + "\n"
                             + "รูปแบบ : " + strMedType + "\n"
                             + "สรรพคุณ : " + strMedIndication + "\n"
-                            + "วิธีรับประทาน : " + strMedDirection + "\n"
+                            + "วิธีการใช้ยา : " + strMedDirection + "\n"
                             + "คำเตือน : " + strMedWarning + "\n"
                             + "วันหมดอายุ : " + expiredDate + "\n");
                     viewDetail.setPositiveButton("ตกลง",
